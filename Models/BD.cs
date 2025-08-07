@@ -21,20 +21,18 @@ public static class BD
 {
     private static string _connectionString = @"Server=localhost; DataBase=TP06BD; Integrated Security=True; TrustServerCertificate=True;";
 
-    public static Usuario Login(string Usuario, string Password){
+    public static int Login(string Usuario, string Password){
         int Id = 0;
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string query = "SELECT Id FROM Usuario WHERE Usuario = @Usuario AND Password = @Password";
             Id = connection.QueryFirstOrDefault<int>(query, new { Usuario,  Password});
         }
-        Usuario usuario = null;
-        if(Id != 0){
-            usuario = GetUsuario(Id);
+        if (Id !=0){
             ActualizarFecha(Id);
         }
-        return usuario;
+        return Id;
     }
-    private static Usuario GetUsuario(int id){
+    public static Usuario GetUsuario(int id){
         Usuario usuario = null;
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string query = "SELECT * FROM Usuario WHERE ID = @Id";
@@ -48,7 +46,13 @@ public static class BD
              connection.Execute(query, new {ID});
         }
     }
-    
+/*    public static void Registro (string Usuario, string Password, string Apellido, string Foto, string Nombre){
+        using(SqlConnection connection = new SqlConnection(_connectionString)){
+            string query = "INSERT INTO Usuario (Nombre, Apellido, Usuario, Password, Foto) VALUES (@Nombre, @Apellido, @Usuario, @Password, @Foto)";
+            connection.Execute(query, new {ID});
+        }
+    )
+  */  
 
 
 }

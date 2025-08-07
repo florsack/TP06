@@ -1,8 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
+<header>
 
+<img src="wwwroot/imagenes/logo.png" alt="logo">
+<button class="iniciarSesion">Iniciar Sesión</button>
+<button class="registrarse">Registrarse</button>
+<button class="cerrarSesion">Cerrar Sesión</button>
+<img src="@ViewBag.Usuario.Foto" alt="userFoto">
+
+</header>
+
+<main>
+
+<section class="banner">
 <div>
-    <h1>Index</h1>
-    <p>Bienvenidos al sitio web de NombreProyecto</p>
+@ViewBag
 </div>
+</section>
+</main>
+
+<footer>
+
+</footer>
+
+
