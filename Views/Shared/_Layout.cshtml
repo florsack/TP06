@@ -10,7 +10,14 @@
 
 <body>
     <header>
-        NombreProyecto
+        <img src="wwwroot/imagenes/logo.png" alt="logo">
+        @if(@ViewBag.estaRegistrado != 0){
+            <a href= "@Url.Action("LogOut")">LogOut</a>
+            <img src="@ViewBag.Usuario.Foto" alt="userFoto">
+        }else{
+            <a href= "@Url.Action("SignIn")">SignIn</a>
+            <a href= "@Url.Action("LogIn")">LogIn</a>
+        }
     </header>
 
     <main role="main">

@@ -15,6 +15,14 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
+        @ViewBag.estaRegistrado = usuario.ID;
+        return View("Index");
+    }
+    public IActionResult VerTareas(){
+        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
+        @ViewBag.estaRegistrado = usuario.ID;
+        @ViewBag.tareas = BD.VerTareas(usuario.ID);
         return View();
     }
 }

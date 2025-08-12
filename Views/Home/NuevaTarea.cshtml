@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "NuevaTarea";
+}
+
+<main>
+
+
+<div class="container">
+    <h1>Crear nueva tarea</h1>
+    <form method="post" action="@Url.Action("guardarTarea")">
+        <label>Título:</label>
+        <input type="text" name="Titulo" required>
+
+        <label>Descripción:</label>
+        <input type="text" name="Descripcion" required>
+
+        <label>Fecha:</label>
+        <input type="date" name="Fecha" required>
+
+        <input type="submit" value="Guardar">
+    </form>
+</div>
+
+
+</main>
