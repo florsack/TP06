@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "LogIn";
+}
+
+<main>
+
+@if(@ViewBag.segundoIntento==true)
+{
+<h1>Hay un error en el usuario o en la contraseña, ingrese nuevamente.</h1>
+}
+<div class="container">
+    <h1>Log in</h1>
+    <form method="post" action="@Url.Action("LogInGuardar", "Account")">
+        <label>Nombre de usuario:</label>
+        <input type="text" name="Usuario" required>
+        <label>Contraseña:</label>
+        <input type="password" name="Password" required>
+        <input type="submit" value="Guardar">
+    </form>
+</div>
+
+</main>

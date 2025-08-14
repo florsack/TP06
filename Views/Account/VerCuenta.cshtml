@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "VerCuenta";
+}
+
+<main>
+<img src="/imagenes/@ViewBag.Usuario.Foto" alt ="userFoto"></a>
+
+<h1>Usuario:</h1>
+<h2>@ViewBag.Usuario.User</h2>
+
+<h1>Nombre:</h1>
+<h2>@ViewBag.Usuario.Nombre</h2>
+
+<h1>Apellido:</h1>
+<h2>@ViewBag.Usuario.Apellido</h2>
+
+<p>Fecha de último login:</p>
+<p>@ViewBag.Usuario.FechaUL</p>
+
+<a href= "@Url.Action("LogOut", "Account")"><button>Cerrar Sesión<button></a>
+</main>

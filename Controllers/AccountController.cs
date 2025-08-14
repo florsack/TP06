@@ -17,55 +17,62 @@ public class AccountController : Controller
         _env = env;
     }
     public IActionResult Index(){
-        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
-        @ViewBag.estaRegistrado = usuario.ID;
+        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+        Usuario user = BD.GetUsuario(usuario);
+        @ViewBag.Usuario = user;
+        @ViewBag.estaRegistrado = user.ID;
         return View();
     }
     public IActionResult LogIn(){
-        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
-        @ViewBag.estaRegistrado = usuario.ID;
+        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+        Usuario user = BD.GetUsuario(usuario);
+        @ViewBag.Usuario = user;
+        @ViewBag.estaRegistrado = user.ID;
         return View("LogIn");
     }
     private IActionResult LogInGuardar(string Usuario, string Password){
         int id = BD.Login(Usuario, Password);
-
         if(id == 0){
             ViewBag.segundoIntento = true;
+            int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+            Usuario user = BD.GetUsuario(usuario);
+            @ViewBag.Usuario = user;
+            @ViewBag.estaRegistrado = user.ID;
             return View ("LogIn");
         }
         else{
-            HttpContext.Session.SetString("usuario", Objetos.ObjectToString(BD.GetUsuario(id)));
+            HttpContext.Session.SetString("usuario", id.ToString());
             ViewBag.usuario = BD.GetUsuario(id);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
     public IActionResult SignIn(){
-        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
-        @ViewBag.estaRegistrado = usuario.ID;
+        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+            Usuario user = BD.GetUsuario(usuario);
+            @ViewBag.Usuario = user;
+            @ViewBag.estaRegistrado = user.ID;
         return View("Registro");
     }
     [HttpPost]
-    public IActionResult GuardarSignIn(string usuario, string contrasena, IFormFile foto)
+    public IActionResult GuardarSignIn(string usuario, string contrasena, IFormFile foto, string nombre, string apellido)
     {
         ViewBag.Usuario = usuario;
+        string rutaDestino = "";
         if (foto != null && foto.Length > 0)
         {
-            string rutaDestino = Path.Combine(_env.WebRootPath, "Fotos", foto.FileName);
+            rutaDestino = Path.Combine(_env.WebRootPath, "Fotos", foto.FileName);
             using (var stream = new FileStream(rutaDestino, FileMode.Create))
             {
                 foto.CopyTo(stream);
             }
-            ViewBag.MensajeFoto = "Foto recibida: " + foto.FileName;
         }
-        else
-        {
-            ViewBag.MensajeFoto = "No se recibió ninguna foto.";
-        }
-            return View("Registro");
-            HttpContext.Session.SetString("usuario", Objetos.ObjectToString(BD.GetUsuario(id)));
+        BD.Registro(usuario, contrasena, apellido, rutaDestino, nombre);
+        int id = BD.Login(usuario, contrasena);
+        HttpContext.Session.SetString("usuario", id.ToString());
+        return Redirect("Index");
     }
     public IActionResult LogOut (){
         HttpContext.Session.Remove("Usuario");
-        return View("Index");
+        return RedirectToAction("Index");
     }
 }

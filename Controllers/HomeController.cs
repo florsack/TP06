@@ -25,4 +25,10 @@ public class HomeController : Controller
         @ViewBag.tareas = BD.VerTareas(usuario.ID);
         return View();
     }
+    public IActionResult NuevaTarea(){
+        Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
+        @ViewBag.estaRegistrado = usuario.ID;
+        @ViewBag.tareas = BD.VerTareas(usuario.ID);
+        return View();
+    }
 }

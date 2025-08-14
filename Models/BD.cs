@@ -43,7 +43,7 @@ public static class BD
             usuario = connection.QueryFirstOrDefault<Usuario>(query, new {id});
         }
         return usuario;
-    }
+            }
     private static void ActualizarFecha(int ID){
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string query = "UPDATE Usuario SET FechaUL = GETDATE() WHERE ID = @ID";
@@ -55,7 +55,7 @@ public static class BD
         bool sePudoRegistrar = true;
         if (idParaChequear == 0){
             using(SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = "INSERT INTO Usuario (Nombre, Apellido, Usuario, Password, Foto) VALUES (@Nombre, @Apellido, @Usuario, @Password, @Foto)";
+                string query = "INSERT INTO Usuario (Nombre, Apellido, User, Password, Foto) VALUES (@Nombre, @Apellido, @Usuario, @Password, @Foto)";
                 connection.Execute(query, new {Usuario, Password, Apellido, Foto, Nombre});
             }
         } else{
