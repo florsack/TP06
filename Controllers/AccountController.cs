@@ -16,13 +16,7 @@ public class AccountController : Controller
     {
         _env = env;
     }
-    public IActionResult Index(){
-        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
-        Usuario user = BD.GetUsuario(usuario);
-        @ViewBag.Usuario = user;
-        @ViewBag.estaRegistrado = user.ID;
-        return View();
-    }
+    
     public IActionResult LogIn(){
         int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
         Usuario user = BD.GetUsuario(usuario);
