@@ -1,0 +1,12 @@
+<main>
+    <section>
+        <h1>Modificar Tarea</h1>
+        <form method="post" action="@Url.Action("ModificarTareaGuardar", "Home")">
+            <input type="hidden" name="id" value="@ViewBag.Tarea.Id" />
+            <input type="text" name="titulo" value="@ViewBag.Tarea.Nombre" />
+            <input type="text" name="descripcion" value="@ViewBag.Tarea.Descripcion" />
+            <input type="date" name="fecha" value="@ViewBag.Tarea.Fecha" />
+            <input type="submit" value="Modificar"/>
+        </form>
+    </section>
+</main>

@@ -63,7 +63,7 @@ public static class BD
         }
         return sePudoRegistrar;
    }
-   public static void AnadirTarea (string Titulo, string Descripcion, string Fecha, int IdUsuario){
+   public static void AnadirTarea (string Titulo, string Descripcion, DateTime Fecha, int IdUsuario){
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string query = "INSERT INTO Tareas (Titulo, Descripcion, Fecha, Finalizada, IdUsuario) VALUES (@Titulo, @Descripcion, @Fecha, 0, @IdUsuario)";
             connection.Execute(query, new {Titulo, Descripcion, Fecha, IdUsuario });
