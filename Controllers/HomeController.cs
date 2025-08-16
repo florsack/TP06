@@ -23,7 +23,20 @@ public class HomeController : Controller
         @ViewBag.tareas = tareas;
         return View("Index");
     }
-    public IActionResult VerTareas(){
+    public IActionResult FinalizarTarea(int Id, bool Finalizada)
+    {
+        if (Finalizada)
+        {
+            BD.FinalizarTarea(Id);
+        }
+        else
+        {
+            BD.DesfinalizarTarea(Id);
+        }
+        return RedirectToAction("Index");
+    }
+    public IActionResult VerTareas()
+    {
         Usuario usuario = Objetos.StringToObject<Usuario>(HttpContext.Session.GetString("usuario"));
         @ViewBag.estaRegistrado = usuario.ID;
         @ViewBag.tareas = BD.VerTareas(usuario.ID);

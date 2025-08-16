@@ -4,15 +4,33 @@
 
 
 <main>
-<a href= "@Url.Action("NuevaTarea", "Home")"><button>Nueva tarea</button></a>
-<a href= "@Url.Action("LogIn", "Account")"><button>Log in</button></a>
+    <a href= "@Url.Action("NuevaTarea", "Home")"><button>Nueva tarea</button></a>
+    <a href= "@Url.Action("LogIn", "Account")"><button>Log in</button></a>
 
 </main>
 
-<section class="banner">
-<div>
-@ViewBag
-</div>
+<section>
+    @foreach(Tarea tarea in @ViewBag.tareas)
+    {
+        <div>
+            <form action="@Url.Action("FinalizarTarea", "Home")" method="post">
+                <input type="hidden" name="Id" value="@tarea.ID" />
+                <input type="hidden" name="Finalizada" value="false" />
+                <input type="checkbox" 
+                name="Finalizada" 
+                value="true" 
+                @(tarea.Finalizada ? "checked" : "") 
+                onchange="this.form.submit()" />
+            </form>
+                <h1>@tarea.Titulo</h1>
+                <p>@tarea.Descripcion</p>
+                <h1>Fecha límite: @tarea.Fecha</h1>
+        </div>
+    }
+    <div>
+        <a href="@Url.Action("NuevaTarea", "Home")"><button>Agregar una tarea</button></a>
+    </div>
+</section>
 </section>
 </main>
 

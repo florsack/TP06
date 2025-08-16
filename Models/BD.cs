@@ -89,11 +89,19 @@ public static class BD
              connection.Execute(query, new {Id});
         }
     }
-    public static Tarea VerTarea(int Id){
-        Tarea tarea = new Tarea();
+    public static void DesfinalizarTarea(int Id){
         using(SqlConnection connection = new SqlConnection(_connectionString)){
+            string query = "UPDATE Tarea SET Finalizada = 0 WHERE ID = @Id";
+             connection.Execute(query, new {Id});
+        }
+    }
+    public static Tarea VerTarea(int Id)
+    {
+        Tarea tarea = new Tarea();
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
             string query = "SELECT * FROM Tarea WHERE Id = @Id";
-            tarea = connection.QueryFirstOrDefault<Tarea>(query, new {Id});
+            tarea = connection.QueryFirstOrDefault<Tarea>(query, new { Id });
         }
         return tarea;
     }
