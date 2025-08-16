@@ -45,7 +45,7 @@ public class AccountController : Controller
             Usuario user = BD.GetUsuario(usuario);
             @ViewBag.Usuario = user;
             @ViewBag.estaRegistrado = user.ID;
-        return View("Registro");
+        return View("registro");
     }
     [HttpPost]
     public IActionResult GuardarSignIn(string usuario, string contrasena, IFormFile foto, string nombre, string apellido)

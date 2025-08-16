@@ -4,43 +4,48 @@
 
 
 <main>
-    <a href= "@Url.Action("NuevaTarea", "Home")"><button>Nueva tarea</button></a>
-    <a href= "@Url.Action("LogIn", "Account")"><button>Log in</button></a>
+    @if(@ViewBag.estaRegistrado == 0){
+        <h1>¿Ya tenés cuenta?</h1>
+        <a href= "@Url.Action("LogIn", "Account")"><button>Log in</button></a>
+        <h1>Si no tenés, no hay problema</h1>
+        <a href= "@Url.Action("SignIn", "Account")"><button>Registrarse</button></a>
+    }else{
+        <section>
+            @foreach(Tarea tarea in @ViewBag.tareas)
+            {
+            <div>
+                <form action="@Url.Action("FinalizarTarea", "Home")" method="post">
+                    <input type="hidden" name="Id" value="@tarea.ID" />
+                    <input type="hidden" name="Finalizada" value="false" />
+                    <input type="checkbox" 
+                    name="Finalizada" 
+                    value="true" 
+                    @(tarea.Finalizada ? "checked" : "") 
+                    onchange="this.form.submit()" />
+                </form>
+                    <h1>@tarea.Titulo</h1>
+                    <p>@tarea.Descripcion</p>
+                    <h1>Fecha límite: @tarea.Fecha</h1>
+                <form action="@Url.Action("EliminarTarea", "Home")" method="post">
+                    <input type="hidden" name="Id" value="@tarea.ID" />
+                    <button type="submit">Eliminar</button>
+                </form>
+                <form action="@Url.Action("ModificarTarea", "Home")" method="post">
+                    <input type="hidden" name="Id" value="@tarea.ID" />
+                    <button type="submit">Modificar</button>
+                </form>
+            </div>
+            }
+            <div>
+                <a href="@Url.Action("NuevaTarea", "Home")"><button>Agregar una tarea</button></a>
+            </div>
+            </section>
+        }
+
 
 </main>
 
-<section>
-    @foreach(Tarea tarea in @ViewBag.tareas)
-    {
-        <div>
-            <form action="@Url.Action("FinalizarTarea", "Home")" method="post">
-                <input type="hidden" name="Id" value="@tarea.ID" />
-                <input type="hidden" name="Finalizada" value="false" />
-                <input type="checkbox" 
-                name="Finalizada" 
-                value="true" 
-                @(tarea.Finalizada ? "checked" : "") 
-                onchange="this.form.submit()" />
-            </form>
-                <h1>@tarea.Titulo</h1>
-                <p>@tarea.Descripcion</p>
-                <h1>Fecha límite: @tarea.Fecha</h1>
-            <form action="@Url.Action("EliminarTarea", "Home")" method="post">
-                <input type="hidden" name="Id" value="@tarea.ID" />
-                <button type="submit">Eliminar</button>
-            </form>
-            <form action="@Url.Action("ModificarTarea", "Home")" method="post">
-                <input type="hidden" name="Id" value="@tarea.ID" />
-                <button type="submit">Modificar</button>
-            </form>
-        </div>
-    }
-    <div>
-        <a href="@Url.Action("NuevaTarea", "Home")"><button>Agregar una tarea</button></a>
-    </div>
-</section>
-</section>
-</main>
+
 
 
 
