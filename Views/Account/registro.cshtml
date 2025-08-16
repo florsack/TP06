@@ -1,1 +1,10 @@
-<form>
+<main>
+    <form action="@Url.Action("SignInGuardar", "Account")">
+        <input type="text" name="usuario" placeholder="Usuario" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+        <input type="file" name="foto" placeholder="Foto" accept="image/*" required>
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="apellido" placeholder="Apellido" required>
+        <input type="submit" value="Registrarse">
+    </form>
+</main>
