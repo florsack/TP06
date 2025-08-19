@@ -18,20 +18,27 @@ public class AccountController : Controller
     }
     
     public IActionResult LogIn(){
-        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
-        Usuario user = BD.GetUsuario(usuario);
-        @ViewBag.Usuario = user;
-        @ViewBag.estaRegistrado = user.ID;
-        return View("LogIn");
-    }
-    private IActionResult LogInGuardar(string Usuario, string Password){
-        int id = BD.Login(Usuario, Password);
-        if(id == 0){
-            ViewBag.segundoIntento = true;
+        if (HttpContext.Session.GetString("usuario")!= null)
+        {
             int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
             Usuario user = BD.GetUsuario(usuario);
             @ViewBag.Usuario = user;
             @ViewBag.estaRegistrado = user.ID;
+        }
+        return View("LogIn");
+    }
+    [HttpPost]
+    public IActionResult LogInGuardar(string Usuario, string Password){
+        int id = BD.Login(Usuario, Password);
+        if(id == 0){
+            ViewBag.segundoIntento = true;
+            if (HttpContext.Session.GetString("usuario")!= null)
+            {
+                int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+                Usuario user = BD.GetUsuario(usuario);
+                @ViewBag.Usuario = user;
+                @ViewBag.estaRegistrado = user.ID;
+            }
             return View ("LogIn");
         }
         else{
@@ -41,20 +48,28 @@ public class AccountController : Controller
         }
     }
     public IActionResult SignIn(){
-        int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+        if (HttpContext.Session.GetString("usuario")!= null)
+        {
+            int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
             Usuario user = BD.GetUsuario(usuario);
             @ViewBag.Usuario = user;
             @ViewBag.estaRegistrado = user.ID;
+        }
         return View("registro");
     }
     [HttpPost]
-    public IActionResult GuardarSignIn(string usuario, string contrasena, IFormFile foto, string nombre, string apellido)
+    public IActionResult SignInGuardar(string usuario, string contrasena, IFormFile foto, string nombre, string apellido)
     {
         ViewBag.Usuario = usuario;
         string rutaDestino = "";
         if (foto != null && foto.Length > 0)
         {
-            rutaDestino = Path.Combine(_env.WebRootPath, "Fotos", foto.FileName);
+            string nombreArchivo = foto.FileName;
+
+            rutaDestino = Path.Combine(_env.WebRootPath, "imagenes", foto.FileName);
+            if (!Directory.Exists(rutaDestino))
+                Directory.CreateDirectory(rutaDestino);
+            string rutaCompleta = Path.Combine(rutaDestino, nombreArchivo);
             using (var stream = new FileStream(rutaDestino, FileMode.Create))
             {
                 foto.CopyTo(stream);
@@ -63,7 +78,7 @@ public class AccountController : Controller
         BD.Registro(usuario, contrasena, apellido, rutaDestino, nombre);
         int id = BD.Login(usuario, contrasena);
         HttpContext.Session.SetString("usuario", id.ToString());
-        return Redirect("Index");
+        return RedirectToAction("Index", "Home");
     }
     public IActionResult LogOut (){
         HttpContext.Session.Remove("Usuario");

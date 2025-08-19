@@ -1,15 +1,40 @@
 @{
     ViewData["Title"] = "Modificar Tarea";
 }
+<header class="main-header">
+    <div class="header-left">
+        <img class="logo" src="/imagenes/logo.png" alt="logo">
+    </div>
+
+    <div class="header-center">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <span class="welcome-text">¡Hola, @ViewBag.Usuario.Nombre!</span>
+        }
+        else
+        {
+            <a href="@Url.Action("SignIn", "Account")" class="btn-primary header-btn">Sign In</a>
+            <a href="@Url.Action("LogIn", "Account")" class="btn-primary header-btn">Log </a>
+        }
+    </div>
+
+    <div class="header-right">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
+        }
+    </div>
+</header>
 <main>
     <section>
         <h1>Modificar Tarea</h1>
-        <form method="post" action="@Url.Action("ModificarTareaGuardar", "Home")">
+        <form method="post" action="@Url.Action("ModificarTareaGuardar", "Home")" class="form-box">
             <input type="hidden" name="id" value="@ViewBag.Tarea.Id" />
             <input type="text" name="titulo" value="@ViewBag.Tarea.Nombre" />
             <input type="text" name="descripcion" value="@ViewBag.Tarea.Descripcion" />
             <input type="date" name="fecha" value="@ViewBag.Tarea.Fecha" />
-            <input type="submit" value="Modificar"/>
+            <input type="submit" class="btn-primary" value="Modificar">
         </form>
     </section>
 </main>

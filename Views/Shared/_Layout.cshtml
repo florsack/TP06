@@ -4,33 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NombreProyecto</title>
+    <title>@ViewData["Title"] - To Do</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 
 <body>
-    <header>
-        <img src="wwwroot/imagenes/logo.png" alt="logo">
-        @if(@ViewBag.estaRegistrado != 0){
-            <a href= "@Url.Action("LogOut")">LogOut</a>
-            <img src="@ViewBag.Usuario.Foto" alt="userFoto">
-        }else{
-            <nav> 
-                <ul>
-                     <a href= "@Url.Action("SignIn")"><li>SignIn</li></a>
-                     <a href= "@Url.Action("LogIn")"><li>LogIn</li></a>
-                     <a href= "@Url.Action("VerCuenta","Account")"><img src="/imagenes/@ViewBag.Usuario.Foto" alt ="userFoto"></a>
-               </ul>
-            </nav>
-        }
-    </header>
+    
 
     <main role="main">
         @RenderBody()
     </main>
 
     <footer>
-        &copy; @DateTime.Now.Year - NombreProyecto
+        &copy; @DateTime.Now.Year Uriel Galanti - Florencia Sack - Tomás Grinstein
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

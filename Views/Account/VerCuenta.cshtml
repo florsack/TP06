@@ -2,6 +2,31 @@
     ViewData["Title"] = "VerCuenta";
 }
 
+<header class="main-header">
+    <div class="header-left">
+        <img class="logo" src="/imagenes/logo.png" alt="logo">
+    </div>
+
+    <div class="header-center">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <span class="welcome-text">¡Hola, @ViewBag.Usuario.Nombre!</span>
+        }
+        else
+        {
+            <a href="@Url.Action("SignIn", "Account")" class="btn-primary header-btn">Sign In</a>
+            <a href="@Url.Action("LogIn", "Account")" class="btn-primary header-btn">Log In</a>
+        }
+    </div>
+
+    <div class="header-right">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
+        }
+    </div>
+</header>
 <main>
 <img src="/imagenes/@ViewBag.Usuario.Foto" alt ="userFoto"></a>
 
@@ -17,5 +42,5 @@
 <p>Fecha de último login:</p>
 <p>@ViewBag.Usuario.FechaUL</p>
 
-<a href= "@Url.Action("LogOut", "Account")"><button>Cerrar Sesión<button></a>
+<a href= "@Url.Action("LogOut", "Account")"><button class="btn-secondary">Cerrar Sesión</button></a>
 </main>

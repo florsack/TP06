@@ -1,21 +1,45 @@
 @{
     ViewData["Title"] = "LogIn";
 }
+<header class="main-header">
+    <div class="header-left">
+        <img class="logo" src="/imagenes/logo.png" alt="logo">
+    </div>
 
+    <div class="header-center">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <span class="welcome-text">¡Hola, @ViewBag.Usuario.Nombre!</span>
+        }
+        else
+        {
+            <a href="@Url.Action("SignIn", "Account")" class="btn-primary header-btn">Sign In</a>
+            <a href="@Url.Action("LogIn", "Account")" class="btn-primary header-btn">Log In</a>
+        }
+    </div>
+
+    <div class="header-right">
+        @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
+        {
+            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
+        }
+    </div>
+</header>
 <main>
 
 @if(@ViewBag.segundoIntento==true)
 {
-<h1>Hay un error en el usuario o en la contraseña, ingrese nuevamente.</h1>
+  <h1 class="error-msg">Hay un error en el usuario o en la contraseña, ingrese nuevamente.</h1>
 }
 <div class="container">
     <h1>Log in</h1>
-    <form method="post" action="@Url.Action("LogInGuardar", "Account")">
+    <form method="post" action='@Url.Action("LogInGuardar", "Account")' class="form-box">
         <label>Nombre de usuario:</label>
         <input type="text" name="Usuario" required>
         <label>Contraseña:</label>
         <input type="password" name="Password" required>
-        <input type="submit" value="Guardar">
+        <input type="submit" class="btn-primary" value="Ingresar">
     </form>
 </div>
 
