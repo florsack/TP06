@@ -3,7 +3,7 @@
 }
 <header class="main-header">
     <div class="header-left">
-        <img class="logo" src="/imagenes/logo.png" alt="logo">
+        <a href="@Url.Action("Index", "Home")" class="btn-primary header-btn"><img class="logo" src="/imagenes/logo.png" alt="logo"></a>
     </div>
 
     <div class="header-center">
@@ -21,13 +21,13 @@
     <div class="header-right">
         @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
         {
-            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
-            <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log out</a>
+            <a href="@Url.Action("VerCuenta", "Account")" ><img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto"></a>
+            <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
         }
     </div>
 </header>
 <main>
-    <form action="@Url.Action("SignInGuardar", "Account")" method="post" class="form-box">
+    <form action="@Url.Action("SignInGuardar", "Account")" method="post" class="form-box" enctype="multipart/form-data">
         <input type="text" name="usuario" placeholder="Usuario" required>
         <input type="password" name="contrasena" placeholder="Contraseña" required>
         <input type="file" name="foto" placeholder="Foto" accept="image/*" required>

@@ -3,7 +3,7 @@
 }
 <header class="main-header">
     <div class="header-left">
-        <img class="logo" src="/imagenes/logo.png" alt="logo">
+        <a href="@Url.Action("Index", "Home")" class="btn-primary header-btn"><img class="logo" src="/imagenes/logo.png" alt="logo"></a>
     </div>
 
     <div class="header-center">
@@ -21,7 +21,7 @@
     <div class="header-right">
         @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
         {
-            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("VerCuenta", "Account")" ><img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto"></a>
             <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
         }
     </div>
@@ -30,8 +30,8 @@
     <section>
         <h1>Modificar Tarea</h1>
         <form method="post" action="@Url.Action("ModificarTareaGuardar", "Home")" class="form-box">
-            <input type="hidden" name="id" value="@ViewBag.Tarea.Id" />
-            <input type="text" name="titulo" value="@ViewBag.Tarea.Nombre" />
+            <input type="hidden" name="id" value="@ViewBag.Tarea.ID" />
+            <input type="text" name="titulo" value="@ViewBag.Tarea.Titulo" />
             <input type="text" name="descripcion" value="@ViewBag.Tarea.Descripcion" />
             <input type="date" name="fecha" value="@ViewBag.Tarea.Fecha" />
             <input type="submit" class="btn-primary" value="Modificar">

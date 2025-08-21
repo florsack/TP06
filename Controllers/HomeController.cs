@@ -16,15 +16,15 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         @ViewBag.estaRegistrado = null;
-        if (HttpContext.Session.GetString("usuario")!= null)
-            {
+        if (HttpContext.Session.GetString("usuario")!= null )
+        {
                 int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
                 Usuario user = BD.GetUsuario(usuario);
                 @ViewBag.Usuario = user;
                 @ViewBag.estaRegistrado = user.ID;
                 List<Tarea> tareas = BD.VerTareas(usuario);
                 @ViewBag.tareas = tareas;
-            }
+        }
         return View("Index");
     }
     public IActionResult FinalizarTarea(int Id, bool Finalizada)
@@ -61,6 +61,7 @@ public class HomeController : Controller
         BD.EliminarTarea(Id);
         return RedirectToAction("Index");
     }
+    [HttpPost]
     public IActionResult ModificarTarea(int Id)
     {
         if (HttpContext.Session.GetString("usuario")!= null)

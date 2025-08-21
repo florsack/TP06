@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Inicio";
 }
+
 <header class="main-header">
     <div class="header-left">
         <img class="logo" src="/imagenes/logo.png" alt="logo">
@@ -21,7 +22,7 @@
     <div class="header-right">
         @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
         {
-            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("VerCuenta", "Account")" ><img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto"></a>
             <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
         }
     </div>
@@ -30,48 +31,43 @@
 <main>
     @if(@ViewBag.estaRegistrado == 0 || @ViewBag.estaRegistrado == null){
         <h1>¿Ya tenés cuenta?</h1>
-        <a href="@Url.Action("LogIn", "Account")">
-            <button class="btn-primary">Log in</button>
-        </a>
+        <a href="@Url.Action("LogIn", "Account")"><button class="btn-primary">Log in</button></a>
         <h1>Si no tenés, no hay problema</h1>
-        <a href="@Url.Action("SignIn", "Account")">
-            <button class="btn-primary">Registrarse</button>
-        </a>
+        <a href="@Url.Action("SignIn", "Account")"><button class="btn-primary">Registrarse</button></a>
     } else {
-        <section>
+        <section class="tasks-grid">
             @foreach(Tarea tarea in @ViewBag.tareas)
             {
                 <div class="task-card">
-                    <!-- Checkbox para marcar como finalizada -->
                     <form action="@Url.Action("FinalizarTarea", "Home")" method="post">
+                        <input type="checkbox" 
+                            name="Finalizada" 
+                            value="true" 
+                            @(tarea.Finalizada ? "checked" : "") 
+                            onchange="this.form.submit()" />
                         <input type="hidden" name="Id" value="@tarea.ID" />
                         <input type="hidden" name="Finalizada" value="false" />
-                        <input type="checkbox" 
-                               name="Finalizada" 
-                               value="true" 
-                               @(tarea.Finalizada ? "checked" : "") 
-                               onchange="this.form.submit()" />
                     </form>
 
                     <h1>@tarea.Titulo</h1>
                     <p>@tarea.Descripcion</p>
                     <h3>Fecha límite: @tarea.Fecha</h3>
 
-                    <!-- Botones de acción -->
-                    <form action="@Url.Action("EliminarTarea", "Home")" method="post">
-                        <input type="hidden" name="Id" value="@tarea.ID" />
-                        <button type="submit" class="btn-secondary">Eliminar</button>
-                    </form>
+                    <div class="task-actions">
+                        <form action="@Url.Action("EliminarTarea", "Home")" method="post">
+                            <input type="hidden" name="Id" value="@tarea.ID" />
+                            <button type="submit" class="btn-secondary">Eliminar</button>
+                        </form>
 
-                    <form action="@Url.Action("ModificarTarea", "Home")" method="post">
-                        <input type="hidden" name="Id" value="@tarea.ID" />
-                        <button type="submit" class="btn-secondary">Modificar</button>
-                    </form>
+                        <form action="@Url.Action("ModificarTarea", "Home")" method="post">
+                            <input type="hidden" name="Id" value="@tarea.ID" />
+                            <button type="submit" class="btn-secondary">Modificar</button>
+                        </form>
+                    </div>
                 </div>
             }
 
-            <!-- Botón agregar tarea -->
-            <div class="task-card">
+            <div class="task-card add-task">
                 <a href="@Url.Action("NuevaTarea", "Home")">
                     <button class="btn-primary">Agregar una tarea</button>
                 </a>
@@ -79,8 +75,3 @@
         </section>
     }
 </main>
-
-
-
-
-

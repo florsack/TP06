@@ -27,6 +27,7 @@ public class AccountController : Controller
         }
         return View("LogIn");
     }
+
     [HttpPost]
     public IActionResult LogInGuardar(string Usuario, string Password){
         int id = BD.Login(Usuario, Password);
@@ -44,7 +45,7 @@ public class AccountController : Controller
         else{
             HttpContext.Session.SetString("usuario", id.ToString());
             ViewBag.usuario = BD.GetUsuario(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
     }
     public IActionResult SignIn(){
@@ -66,11 +67,11 @@ public class AccountController : Controller
         {
             string nombreArchivo = foto.FileName;
 
-            rutaDestino = Path.Combine(_env.WebRootPath, "imagenes", foto.FileName);
+            rutaDestino = Path.Combine(_env.WebRootPath, "imagenes");
             if (!Directory.Exists(rutaDestino))
                 Directory.CreateDirectory(rutaDestino);
             string rutaCompleta = Path.Combine(rutaDestino, nombreArchivo);
-            using (var stream = new FileStream(rutaDestino, FileMode.Create))
+            using (var stream = new FileStream(rutaCompleta, FileMode.Create))
             {
                 foto.CopyTo(stream);
             }
@@ -81,7 +82,17 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
     public IActionResult LogOut (){
-        HttpContext.Session.Remove("Usuario");
-        return RedirectToAction("Index");
+        HttpContext.Session.Remove("usuario");
+        return RedirectToAction("Index", "Home");
     }
+     public IActionResult VerCuenta(){
+        if (HttpContext.Session.GetString("usuario")!= null)
+        {
+            int usuario = int.Parse(HttpContext.Session.GetString("usuario"));
+            Usuario user = BD.GetUsuario(usuario);
+            @ViewBag.Usuario = user;
+            @ViewBag.estaRegistrado = user.ID;
+        }
+        return View();
+     }
 }

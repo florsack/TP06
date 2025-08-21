@@ -1,10 +1,9 @@
 @{
     ViewData["Title"] = "VerCuenta";
 }
-
 <header class="main-header">
     <div class="header-left">
-        <img class="logo" src="/imagenes/logo.png" alt="logo">
+        <a href="@Url.Action("Index", "Home")" class="btn-primary header-btn"><img class="logo" src="/imagenes/logo.png" alt="logo"></a>
     </div>
 
     <div class="header-center">
@@ -14,33 +13,45 @@
         }
         else
         {
-            <a href="@Url.Action("SignIn", "Account")" class="btn-primary header-btn">Sign In</a>
-            <a href="@Url.Action("LogIn", "Account")" class="btn-primary header-btn">Log In</a>
+            <a href="@Url.Action("SignIn", "Account")" class="btn-primary header-btn">Sign in</a>
+            <a href="@Url.Action("LogIn", "Account")" class="btn-primary header-btn">Log in</a>
         }
     </div>
 
     <div class="header-right">
         @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
         {
-            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("VerCuenta", "Account")" ><img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto"></a>
             <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
         }
     </div>
 </header>
 <main>
-<img src="/imagenes/@ViewBag.Usuario.Foto" alt ="userFoto"></a>
+    <section class="account-section">
+        <img src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto" class="profile-pic" style="width:100px; border-radius:50%; margin:0 auto; display:block;">
 
-<h1>Usuario:</h1>
-<h2>@ViewBag.Usuario.User</h2>
+        <div class="account-item">
+            <span class="account-label">Usuario:</span>
+            <span class="account-value">@ViewBag.Usuario.NombreUsuario</span>
+        </div>
 
-<h1>Nombre:</h1>
-<h2>@ViewBag.Usuario.Nombre</h2>
+        <div class="account-item">
+            <span class="account-label">Nombre:</span>
+            <span class="account-value">@ViewBag.Usuario.Nombre</span>
+        </div>
 
-<h1>Apellido:</h1>
-<h2>@ViewBag.Usuario.Apellido</h2>
+        <div class="account-item">
+            <span class="account-label">Apellido:</span>
+            <span class="account-value">@ViewBag.Usuario.Apellido</span>
+        </div>
 
-<p>Fecha de último login:</p>
-<p>@ViewBag.Usuario.FechaUL</p>
+        <div class="account-item">
+            <span class="account-label">Fecha de último login:</span>
+            <span class="account-value">@ViewBag.Usuario.FechaUL</span>
+        </div>
 
-<a href= "@Url.Action("LogOut", "Account")"><button class="btn-secondary">Cerrar Sesión</button></a>
+        <div class="account-actions">
+            <a href="@Url.Action("LogOut", "Account")"><button class="btn-primary">Cerrar Sesión</button></a>
+        </div>
+    </section>
 </main>

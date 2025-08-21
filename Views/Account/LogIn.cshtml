@@ -3,7 +3,7 @@
 }
 <header class="main-header">
     <div class="header-left">
-        <img class="logo" src="/imagenes/logo.png" alt="logo">
+        <a href="@Url.Action("Index", "Home")" class="btn-primary header-btn"><img class="logo" src="/imagenes/logo.png" alt="logo"></a>
     </div>
 
     <div class="header-center">
@@ -21,7 +21,7 @@
     <div class="header-right">
         @if(@ViewBag.estaRegistrado != 0 && @ViewBag.estaRegistrado != null)
         {
-            <img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto">
+            <a href="@Url.Action("VerCuenta", "Account")" ><img class="profile-pic" src="/imagenes/@ViewBag.Usuario.Foto" alt="userFoto"></a>
             <a href="@Url.Action("LogOut", "Account")" class="btn-secondary header-btn">Log Out</a>
         }
     </div>
@@ -34,7 +34,7 @@
 }
 <div class="container">
     <h1>Log in</h1>
-    <form method="post" action='@Url.Action("LogInGuardar", "Account")' class="form-box">
+    <form action="@Url.Action("LogInGuardar", "Account")" method="Post"  class="form-box">
         <label>Nombre de usuario:</label>
         <input type="text" name="Usuario" required>
         <label>Contraseña:</label>
