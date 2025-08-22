@@ -30,6 +30,7 @@ public class AccountController : Controller
 
     [HttpPost]
     public IActionResult LogInGuardar(string Usuario, string Password){
+        HttpContext.Session.Remove("usuario");
         int id = BD.Login(Usuario, Password);
         if(id == 0){
             ViewBag.segundoIntento = true;
@@ -63,6 +64,7 @@ public class AccountController : Controller
     {
         ViewBag.Usuario = usuario;
         string rutaDestino = "";
+        
         if (foto != null && foto.Length > 0)
         {
             string nombreArchivo = foto.FileName;
@@ -76,6 +78,7 @@ public class AccountController : Controller
                 foto.CopyTo(stream);
             }
         }
+        HttpContext.Session.Remove("usuario");
         BD.Registro(usuario, contrasena, apellido, rutaDestino, nombre);
         int id = BD.Login(usuario, contrasena);
         HttpContext.Session.SetString("usuario", id.ToString());
